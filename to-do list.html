@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+        body{
+            font-family: Arial;
+        }
+        .addElement,
+        .input-div{
+            display: grid;
+            grid-template-columns: 200px 150px 100px;
+            column-gap: 10px;
+            row-gap: 10px;
+            align-items: center;
+
+        }
+        .input-div{
+            margin-bottom: 10px;
+            align-items: stretch;
+        }
+        .input-date,
+        .js-name-input{
+            font-size: 15px;
+            padding: 6px;
+        }
+        .add-button{
+            font-size: 15px;
+            background-color: green;
+            color: white;;
+            border: none ;
+            cursor: pointer;
+
+        }
+        .delete-button{
+            background-color: darkred;
+            font-size: 15px ;
+            color: white ;
+            border: none;
+            cursor: pointer;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <p>To Do List</p>
+    <div class="input-div"> 
+        <input placeholder="To Do Name" class="js-name-input">
+        <input class="input-date" type="date"> 
+        <button onclick="
+            addOneElement();
+        " class="add-button">Add</button>
+    </div> 
+    <div class="addElement">
+
+    </div>
+    <script>
+        let toDoList = [
+            {
+                name : 'Anup',
+                duedate: '2022-05-30'
+                
+            },
+            {
+                name: 'Adesh',
+                duedate: '2022-07-13'
+            }
+        ];
+        console.log(toDoList);
+        renderFunction();
+        function renderFunction(){
+            let toAdd = '';
+            for(let i= 0;i<toDoList.length;i++){
+                const {name, duedate} = toDoList[i];
+                toAdd+= `<div>${name}</div>
+                         <div>${duedate}</div>
+                        <button onclick = "
+                            toDoList.splice(${i},1);
+                            renderFunction();
+                        " class="delete-button">
+                            Detete
+                        </button> 
+                        `;
+            }
+            document.querySelector('.addElement').innerHTML = toAdd;
+        }
+        function addOneElement () {
+            const name = document.querySelector('.js-name-input').value;
+            const duedate = document.querySelector('.input-date').value;
+            if((name!=='') && (duedate !== '')) toDoList.push({name, duedate});
+            document.querySelector('.js-name-input').value='';
+            document.querySelector('.input-date').value='';
+            renderFunction();
+        }
+
+    </script>
+</body>
+</html>
